@@ -49,10 +49,8 @@ async function getProducts() {
     try {
         const products = await getData(productsUrl);
 
+        console.log(products)
         for (let product of products) {
-            const randomImage = faker.image.urlLoremFlickr({
-                category: product.title
-            });
 
             productsContainer.insertAdjacentHTML(
                 'beforeend',
@@ -67,8 +65,10 @@ async function getProducts() {
             );
 
 
-            const card = document.querySelector(`[data-productId="${product.id}"]`)
-            console.log(card)
+            const card = document.querySelector(`[data-productId="${product.id}"]`);
+            card.addEventListener('click', function handleProductDetails() {
+                window.location.href = `../productDetails/index.html?productId=${product.id}`;
+            });
         }
     } catch (error) {
         console.log(error)
